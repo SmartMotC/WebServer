@@ -1,0 +1,11 @@
+# Создать venv
+python -m venv venv
+
+# Активировать
+venv\Scripts\activate
+
+# Запуск через uvicorn
+uvicorn main:app --port 2000 --reload
+
+# Запуск через fastapi
+fastapi dev main.py --reload
