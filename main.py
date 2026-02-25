@@ -13,12 +13,10 @@ from datetime import datetime
 
 app = FastAPI()
 
-# ✅ Подключаем статику и шаблоны
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
-# ✅ Главная страница - наш фронтенд
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
@@ -29,7 +27,6 @@ async def get_start():
     return {"message": f"🔥 TEST {datetime.now()}"}
 
 
-# ✅ ПОЛЬЗОВАТЕЛИ
 @app.get("/users/all_users", tags=["AdminPanel"])
 async def get_all_users(db1: Session = Depends(get_db)):
     users = db1.query(User).all()
@@ -106,7 +103,6 @@ async def delete_users(id: int, db1: Session = Depends(get_db)):
     return {"message": "✅ Пользователь удален"}
 
 
-# ✅ АДМИН ПРОВЕРКА
 @app.post("/admin/check", tags=["Admin"])
 async def check_admin(password: str):
     if password == "Matik2011":
@@ -114,7 +110,6 @@ async def check_admin(password: str):
     raise HTTPException(status_code=403, detail="Неверный пароль")
 
 
-# ✅ ГОЛОСОВАНИЯ
 @app.post("/vote/add_votes", tags=["AdminPanel"])
 async def add_vote(
         category: str,
@@ -266,7 +261,6 @@ async def cast_vote(
         raise HTTPException(status_code=500, detail="❌ Ошибка сохранения голоса")
 
 
-# ✅ МЕМЫ С ЛАЙКАМИ
 @app.post("/memes/add", tags=["Memes"])
 async def add_meme(
         category: str,
