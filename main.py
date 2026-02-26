@@ -105,7 +105,7 @@ async def delete_users(id: int, db1: Session = Depends(get_db)):
 
 @app.post("/admin/check", tags=["Admin"])
 async def check_admin(password: str):
-    if password == "Matik2011":
+    if password == "321":
         return {"access": True}
     raise HTTPException(status_code=403, detail="Неверный пароль")
 
